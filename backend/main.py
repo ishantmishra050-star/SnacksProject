@@ -66,6 +66,15 @@ async def add_security_headers(request: Request, call_next):
     return response
 
 
+@app.get("/api/seed")
+def force_seed_database():
+    import subprocess
+    try:
+        result = subprocess.run(["python", "backend/seed_db.py"], capture_output=True, text=True, check=True)
+        return {"status": "success", "output": result.stdout}
+    except subprocess.CalledProcessError as e:
+        return {"status": "error", "error": e.stderr}
+        
 # Include routers
 app.include_router(auth.router)
 app.include_router(stores.router)
