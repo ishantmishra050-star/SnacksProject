@@ -13,7 +13,8 @@ SECRET_KEY = os.getenv("JWT_SECRET_KEY", secrets.token_urlsafe(64))
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("TOKEN_EXPIRE_MINUTES", "120"))  # 2 hours
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+import bcrypt
+
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
 
 # ─── Password Policy ───
@@ -21,7 +22,6 @@ MIN_PASSWORD_LENGTH = 8
 PASSWORD_PATTERN = re.compile(
     r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$'
 )
-
 
 def validate_password_strength(password: str) -> None:
     """Enforce minimum password strength requirements."""
@@ -36,13 +36,12 @@ def validate_password_strength(password: str) -> None:
             detail="Password must contain at least one uppercase letter, one lowercase letter, and one digit",
         )
 
-
 def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
-
+    salt = bcrypt.gensalt()
+    return bcrypt.hashpw(password.encode('utf-8'), salt).decode('utf-8')
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return pwd_context.verify(plain_password, hashed_password)
+    return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
 
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
