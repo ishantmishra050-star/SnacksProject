@@ -54,12 +54,13 @@ for name, rname, desc, cat, reg, img, gst in products_data:
 
 
 # --- Seed a store owner ---
+default_store_password_hash = hash_password("store123")
 owner = db.query(User).filter(User.email == "chitale@example.com").first()
 if not owner:
     owner = User(
         email="chitale@example.com",
         name="Chitale Bandhu",
-        password_hash=hash_password("store123"),
+        password_hash=default_store_password_hash,
         phone="+91-9876543210",
         country="India",
         role=UserRole.store_owner,
@@ -94,7 +95,7 @@ if not owner2:
     owner2 = User(
         email="induben@example.com",
         name="Induben Khakhrawala",
-        password_hash=hash_password("store123"),
+        password_hash=default_store_password_hash,
         phone="+91-9988776655",
         country="India",
         role=UserRole.store_owner,
@@ -128,7 +129,7 @@ owner3 = db.query(User).filter(User.email == "das@example.com").first()
 if not owner3:
     owner3 = User(
         email="das@example.com", name="Das Khaman House",
-        password_hash=hash_password("store123"), phone="+91-79-11223344", country="India", role=UserRole.store_owner
+        password_hash=default_store_password_hash, phone="+91-79-11223344", country="India", role=UserRole.store_owner
     )
     db.add(owner3)
     db.flush()
@@ -147,7 +148,7 @@ if not store3:
 # 2. Sukhadia Garbaddas Bapuji (Gujarat)
 owner4 = db.query(User).filter(User.email == "sukhadia@example.com").first()
 if not owner4:
-    owner4 = User(email="sukhadia@example.com", name="Sukhadia Garbaddas Bapuji", password_hash=hash_password("store123"), role=UserRole.store_owner)
+    owner4 = User(email="sukhadia@example.com", name="Sukhadia Garbaddas Bapuji", password_hash=default_store_password_hash, role=UserRole.store_owner)
     db.add(owner4)
     db.flush()
 
@@ -165,7 +166,7 @@ if not store4:
 # 3. Prakash Shakahari Upahar Kendra (Maharashtra)
 owner5 = db.query(User).filter(User.email == "prakash@example.com").first()
 if not owner5:
-    owner5 = User(email="prakash@example.com", name="Prakash Upahar Kendra", password_hash=hash_password("store123"), role=UserRole.store_owner)
+    owner5 = User(email="prakash@example.com", name="Prakash Upahar Kendra", password_hash=default_store_password_hash, role=UserRole.store_owner)
     db.add(owner5)
     db.flush()
 
@@ -183,7 +184,7 @@ if not store5:
 # 4. Laxmi Narayan Chiwda (Maharashtra)
 owner6 = db.query(User).filter(User.email == "laxminarayan@example.com").first()
 if not owner6:
-    owner6 = User(email="laxminarayan@example.com", name="Laxmi Narayan Chiwda", password_hash=hash_password("store123"), role=UserRole.store_owner)
+    owner6 = User(email="laxminarayan@example.com", name="Laxmi Narayan Chiwda", password_hash=default_store_password_hash, role=UserRole.store_owner)
     db.add(owner6)
     db.flush()
 
@@ -201,7 +202,7 @@ if not store6:
 # 5. Jairamdas Bhojraj (Kalyan)
 owner7 = db.query(User).filter(User.email == "jairamdas@example.com").first()
 if not owner7:
-    owner7 = User(email="jairamdas@example.com", name="Jairamdas Bhojraj", password_hash=hash_password("store123"), role=UserRole.store_owner)
+    owner7 = User(email="jairamdas@example.com", name="Jairamdas Bhojraj", password_hash=default_store_password_hash, role=UserRole.store_owner)
     db.add(owner7)
     db.flush()
 
@@ -219,7 +220,7 @@ if not store7:
 # 6. Purushottam Kandoi (Ghatkopar)
 owner8 = db.query(User).filter(User.email == "purushottam@example.com").first()
 if not owner8:
-    owner8 = User(email="purushottam@example.com", name="Purushottam Kandoi", password_hash=hash_password("store123"), role=UserRole.store_owner)
+    owner8 = User(email="purushottam@example.com", name="Purushottam Kandoi", password_hash=default_store_password_hash, role=UserRole.store_owner)
     db.add(owner8)
     db.flush()
 
@@ -237,7 +238,7 @@ if not store8:
 # 7. Harilal's (Bihar)
 owner9 = db.query(User).filter(User.email == "harilals@example.com").first()
 if not owner9:
-    owner9 = User(email="harilals@example.com", name="Harilal's", password_hash=hash_password("store123"), role=UserRole.store_owner)
+    owner9 = User(email="harilals@example.com", name="Harilal's", password_hash=default_store_password_hash, role=UserRole.store_owner)
     db.add(owner9)
     db.flush()
 
@@ -255,7 +256,7 @@ if not store9:
 # 8. Nobin Chandra Das (West Bengal)
 owner10 = db.query(User).filter(User.email == "nobindas@example.com").first()
 if not owner10:
-    owner10 = User(email="nobindas@example.com", name="Nobin Chandra Das", password_hash=hash_password("store123"), role=UserRole.store_owner)
+    owner10 = User(email="nobindas@example.com", name="Nobin Chandra Das", password_hash=default_store_password_hash, role=UserRole.store_owner)
     db.add(owner10)
     db.flush()
 
@@ -273,7 +274,7 @@ if not store10:
 # 9. Matu Ram's (Haryana)
 owner11 = db.query(User).filter(User.email == "maturam@example.com").first()
 if not owner11:
-    owner11 = User(email="maturam@example.com", name="Matu Ram Halwai", password_hash=hash_password("store123"), role=UserRole.store_owner)
+    owner11 = User(email="maturam@example.com", name="Matu Ram Halwai", password_hash=default_store_password_hash, role=UserRole.store_owner)
     db.add(owner11)
     db.flush()
 
@@ -291,7 +292,7 @@ if not store11:
 # 10. Laxmi Misthan Bhandar (Rajasthan)
 owner12 = db.query(User).filter(User.email == "lmb@example.com").first()
 if not owner12:
-    owner12 = User(email="lmb@example.com", name="Laxmi Misthan Bhandar", password_hash=hash_password("store123"), role=UserRole.store_owner)
+    owner12 = User(email="lmb@example.com", name="Laxmi Misthan Bhandar", password_hash=default_store_password_hash, role=UserRole.store_owner)
     db.add(owner12)
     db.flush()
 
@@ -309,7 +310,7 @@ if not store12:
 # 11. Pramod Laddu Bhandar (Gaya)
 owner13 = db.query(User).filter(User.email == "pramod@example.com").first()
 if not owner13:
-    owner13 = User(email="pramod@example.com", name="Pramod Laddu Bhandar", password_hash=hash_password("store123"), role=UserRole.store_owner)
+    owner13 = User(email="pramod@example.com", name="Pramod Laddu Bhandar", password_hash=default_store_password_hash, role=UserRole.store_owner)
     db.add(owner13)
     db.flush()
 

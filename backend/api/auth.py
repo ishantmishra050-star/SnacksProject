@@ -21,7 +21,8 @@ LOGIN_WINDOW_SECONDS = 300  # 5-minute window
 
 def _check_rate_limit(request: Request):
     """Block if too many login attempts from same IP."""
-    client_ip = request.client.host if request.client else "unknown"
+    forwarded = request.headers.get("x-forwarded-for")
+    client_ip = forwarded.split(",")[0] if forwarded else (request.client.host if request.client else "unknown")
     now = time.time()
     # Clean old entries
     _login_attempts[client_ip] = [
