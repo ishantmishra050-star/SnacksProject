@@ -11,6 +11,7 @@ import Cart from './pages/Cart';
 import OrderHistory from './pages/OrderHistory';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import Admin from './pages/Admin';
 import './index.css';
 
 /* ─── Navbar ─── */
@@ -30,6 +31,9 @@ function Navbar() {
                             🛒 Cart {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
                         </Link>
                         <Link to="/orders" className="nav-link">📦 Orders</Link>
+                        {['store_owner', 'admin'].includes(user.role) && (
+                            <Link to="/admin" className="nav-link" style={{ color: '#e67e22', fontWeight: '700' }}>🛡️ Admin</Link>
+                        )}
                         <div className="nav-user">
                             <span className="nav-greeting">Hi, {user.name.split(' ')[0]}</span>
                             <button className="nav-logout" onClick={logout}>Logout</button>
@@ -215,6 +219,7 @@ function AppShell() {
                     <Route path="/orders" element={<OrderHistory />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
+                    <Route path="/admin" element={<Admin />} />
                 </Routes>
             </div>
             <footer className="footer">
