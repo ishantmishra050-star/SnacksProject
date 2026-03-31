@@ -2,13 +2,13 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import func, desc
 from typing import List, Optional
-from ..database import get_db
-from ..models.order import Order, OrderItem, OrderStatus, PaymentStatus
-from ..models.product import StoreProduct, Product
-from ..models.user import User, UserRole
-from ..models.store import Store
-from ..schemas.schemas import OrderStatusUpdate
-from .auth import get_current_user
+from backend.database import get_db
+from backend.models.order import Order, OrderItem, OrderStatus, PaymentStatus
+from backend.models.product import StoreProduct, Product
+from backend.models.user import User, UserRole
+from backend.models.store import Store
+from backend.schemas.schemas import OrderStatusUpdate
+from backend.api.auth import get_current_user
 
 router = APIRouter(prefix="/api/admin", tags=["Admin"])
 

@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from typing import List, Optional
-from ..database import get_db
-from ..models.store import Store
-from ..models.user import User, UserRole
-from ..schemas.schemas import StoreCreate, StoreOut
+from backend.database import get_db
+from backend.models.store import Store
+from backend.models.user import User, UserRole
+from backend.schemas.schemas import StoreCreate, StoreOut
 from .auth import get_current_user
 
 router = APIRouter(prefix="/api/stores", tags=["Stores"])

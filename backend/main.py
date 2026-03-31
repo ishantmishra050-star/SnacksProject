@@ -2,15 +2,15 @@ import os
 import html
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
-from .database import engine, Base
-from .api import auth, stores, products, orders, users, admin
+from backend.database import engine, Base
+from backend.api import auth, stores, products, orders, users, admin
 
 # Create all tables
 Base.metadata.create_all(bind=engine)
 
 # Auto-seed the database if it is empty (useful for Render free tier SQLite)
-from .database import SessionLocal
-from .models.store import Store
+from backend.database import SessionLocal
+from backend.models.store import Store
 import subprocess
 
 db = SessionLocal()

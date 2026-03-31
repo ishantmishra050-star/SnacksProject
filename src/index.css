@@ -77,6 +77,7 @@ h4 {
 .hero-badge {
     display: inline-block;
     background: rgba(255, 255, 255, 0.15);
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     padding: 0.4rem 1.2rem;
     border-radius: 9999px;
@@ -124,6 +125,7 @@ h4 {
 
 .stat-card {
     background: rgba(255, 255, 255, 0.1);
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 1rem;
@@ -169,6 +171,7 @@ h4 {
     position: sticky;
     top: 0;
     background: rgba(253, 251, 247, 0.92);
+    -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     z-index: 40;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
@@ -316,6 +319,7 @@ h4 {
     font-size: 0.7rem;
     font-weight: 600;
     color: var(--terracotta);
+    -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
@@ -436,6 +440,7 @@ h4 {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.6);
+    -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
     z-index: 100;
     display: flex;
@@ -666,7 +671,7 @@ h4 {
 
 /* ═══════════════════════════════════
    Smooth Scroll & Focus
-═══════════════════════════════════ */
+   ═══════════════════════════════════ */
 html {
     scroll-behavior: smooth;
 }
@@ -694,50 +699,162 @@ html {
     background: var(--saffron);
 }
 
-/* ═══════════════════════════════════
-   Main Navbar
-═══════════════════════════════════ */
-.main-navbar {
+.top-promo-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1.8rem;
+    background: var(--saffron);
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0.85rem 2rem;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+    justify-content: center;
+    z-index: 1100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.top-promo-text {
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    animation: promoFadeIn 0.6s ease-out forwards;
+}
+
+/* ═══════════════════════════════════
+   Main Navbar
+   ═══════════════════════════════════ */
+.main-navbar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 0.5rem 2.5rem;
+    background: rgba(255, 255, 255, 0.75);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    position: fixed;
+    top: 2.3rem; 
+    left: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    border-radius: 2rem;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.main-navbar:hover {
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.15);
+}
+
+.nav-left {
+    justify-self: start;
+    display: flex;
+    align-items: center;
+}
+
+.nav-logo-group {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.nav-logo-group:hover {
+    transform: scale(1.02);
 }
 
 .nav-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--terracotta);
-    text-decoration: none;
-    transition: color 0.3s;
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--saffron);
+    line-height: 1.1;
+    white-space: nowrap;
 }
 
-.nav-logo:hover {
-    color: var(--saffron);
+.nav-tagline-mobile-hide {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--terracotta);
+    opacity: 0.85;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    margin-top: -2px;
+}
+
+.nav-center-stack {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 420px;
+}
+
+.nav-search-wrap {
+    position: relative;
+    width: 100%;
+}
+
+
+.nav-search-input {
+    width: 100%;
+    padding: 0.6rem 1.25rem 0.6rem 2.5rem;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(234, 88, 12, 0.2);
+    border-radius: 9999px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+    outline: none;
+    transition: all 0.3s ease;
+    color: var(--dark-wood);
+}
+
+.nav-search-input:focus {
+    background: white;
+    border-color: var(--saffron);
+    box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.1);
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.85rem;
+    opacity: 0.6;
 }
 
 .nav-links {
+    justify-self: end;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1.25rem;
 }
+
+/* Adjust layout for floating navbar */
+.app-body {
+    padding-top: 0;
+}
+
+.hero-section {
+    padding-top: 8rem;
+}
+
+
+
+
 
 .nav-link {
     text-decoration: none;
     color: var(--text-main);
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 500;
-    padding: 0.5rem 0.85rem;
-    border-radius: 0.5rem;
-    transition: background 0.2s, color 0.2s;
+    padding: 0.6rem 1rem;
+    border-radius: 9999px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: 0.02em;
 }
 
 .nav-link:hover {
@@ -749,14 +866,16 @@ html {
     background: linear-gradient(135deg, var(--saffron), var(--terracotta));
     color: white !important;
     border-radius: 9999px;
-    padding: 0.5rem 1.25rem;
+    padding: 0.6rem 1.75rem;
     font-weight: 600;
+    box-shadow: 0 4px 15px rgba(234, 88, 12, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .login-link:hover {
     background: linear-gradient(135deg, var(--terracotta), #9a3412);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(234, 88, 12, 0.4);
     color: white !important;
 }
 

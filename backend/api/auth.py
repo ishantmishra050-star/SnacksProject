@@ -3,11 +3,11 @@ import html
 from collections import defaultdict
 from fastapi import APIRouter, Depends, HTTPException, Request, status, BackgroundTasks
 from sqlalchemy.orm import Session
-from ..database import get_db
-from ..models.user import User
-from ..schemas.schemas import UserRegister, UserLogin, Token, UserOut, ForgotPasswordRequest, ResetPasswordRequest
-from ..utils.email import send_password_reset_email
-from ..utils.security import (
+from backend.database import get_db
+from backend.models.user import User
+from backend.schemas.schemas import UserRegister, UserLogin, Token, UserOut, ForgotPasswordRequest, ResetPasswordRequest
+from backend.utils.email import send_password_reset_email
+from backend.utils.security import (
     hash_password, verify_password, create_access_token,
     decode_token, oauth2_scheme, validate_password_strength,
     create_reset_token, verify_reset_token,

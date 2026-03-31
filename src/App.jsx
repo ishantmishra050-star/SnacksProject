@@ -18,32 +18,63 @@ import './index.css';
 function Navbar() {
     const { user, logout } = useAuth();
     const { cartCount } = useCart();
+    const [promoIndex, setPromoIndex] = useState(0);
+    const promos = [
+        "Free delivery on orders over ₹500!",
+        "New Batch of Bhakarwadi Just In!",
+        "Traditional Flavors, Modern Spirit."
+    ];
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setPromoIndex((prev) => (prev + 1) % promos.length);
+        }, 5000);
+        return () => clearInterval(interval);
+    }, []);
 
     return (
-        <nav className="main-navbar">
-            <Link to="/" className="nav-logo">🍘 Snacko</Link>
-            <div className="nav-links">
-                <Link to="/" className="nav-link">Home</Link>
-                <Link to="/stores" className="nav-link">🏪 Shops</Link>
-                {user ? (
-                    <>
-                        <Link to="/cart" className="nav-link cart-link">
-                            🛒 Cart {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
-                        </Link>
-                        <Link to="/orders" className="nav-link">📦 Orders</Link>
-                        {['store_owner', 'admin'].includes(user.role) && (
-                            <Link to="/admin" className="nav-link" style={{ color: '#e67e22', fontWeight: '700' }}>🛡️ Admin</Link>
-                        )}
-                        <div className="nav-user">
-                            <span className="nav-greeting">Hi, {user.name.split(' ')[0]}</span>
-                            <button className="nav-logout" onClick={logout}>Logout</button>
-                        </div>
-                    </>
-                ) : (
-                    <Link to="/login" className="nav-link login-link">Sign In</Link>
-                )}
+        <>
+            <div className="top-promo-bar">
+                <span key={promoIndex} className="top-promo-text">{promos[promoIndex]}</span>
             </div>
-        </nav>
+            <nav className="main-navbar">
+                <div className="nav-left">
+                    <Link to="/" className="nav-logo-group">
+                        <span className="nav-logo">🍘 Snacko</span>
+                        <span className="nav-tagline-mobile-hide">The Soul of Indian Snacks</span>
+                    </Link>
+                </div>
+
+                <div className="nav-center-stack">
+                    <div className="nav-search-wrap">
+                        <input type="text" placeholder="Search for your favorite snack..." className="nav-search-input" />
+                        <span className="search-icon">🔍</span>
+                    </div>
+                </div>
+
+                <div className="nav-links">
+                    <Link to="/" className="nav-link">Home</Link>
+                    <Link to="/stores" className="nav-link">🏪 Shops</Link>
+                    {user ? (
+                        <>
+                            <Link to="/cart" className="nav-link cart-link">
+                                🛒 Cart {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+                            </Link>
+                            <Link to="/orders" className="nav-link">📦 Orders</Link>
+                            {['store_owner', 'admin'].includes(user.role) && (
+                                <Link to="/admin" className="nav-link" style={{ color: '#e67e22', fontWeight: '700' }}>🛡️ Admin</Link>
+                            )}
+                            <div className="nav-user">
+                                <span className="nav-greeting">Hi, {user.name.split(' ')[0]}</span>
+                                <button className="nav-logout" onClick={logout}>Logout</button>
+                            </div>
+                        </>
+                    ) : (
+                        <Link to="/login" className="nav-link login-link">Sign In</Link>
+                    )}
+                </div>
+            </nav>
+        </>
     );
 }
 

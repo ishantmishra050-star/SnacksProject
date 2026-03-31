@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session, joinedload
 from typing import List, Optional
-from ..database import get_db
-from ..models.product import Product, StoreProduct
-from ..schemas.schemas import ProductOut, StoreProductOut
+from backend.database import get_db
+from backend.models.product import Product, StoreProduct
+from backend.schemas.schemas import ProductOut, StoreProductOut
 
 router = APIRouter(prefix="/api/products", tags=["Products"])
 
