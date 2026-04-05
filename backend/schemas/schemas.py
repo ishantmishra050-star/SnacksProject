@@ -161,6 +161,9 @@ class OrderItemOut(BaseModel):
 class OrderStatusUpdate(BaseModel):
     status: str  # pending, confirmed, preparing, shipped, delivered, cancelled
 
+class PaymentStatusUpdate(BaseModel):
+    payment_status: str  # pending, completed, failed, refunded
+
 class OrderOut(BaseModel):
     id: int
     user_id: int

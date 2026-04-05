@@ -145,6 +145,15 @@ function OrdersTab() {
         finally { setUpdating(null); }
     };
 
+    const handlePaymentStatusChange = async (orderId, newStatus) => {
+        setUpdating(orderId);
+        try {
+            await api.patch(`/api/admin/orders/${orderId}/payment_status`, { payment_status: newStatus });
+            setOrders(prev => prev.map(o => o.id === orderId ? { ...o, payment_status: newStatus } : o));
+        } catch (e) { alert('Failed to update payment status'); }
+        finally { setUpdating(null); }
+    };
+
     const filtered = orders.filter(o =>
         o.user.toLowerCase().includes(search.toLowerCase()) ||
         o.store.toLowerCase().includes(search.toLowerCase()) ||
@@ -187,7 +196,16 @@ function OrdersTab() {
                                 <td style={{ padding: '12px 14px', fontWeight: '700', color: '#10b981', whiteSpace: 'nowrap' }}>₹{o.total_amount.toFixed(2)}</td>
                                 <td style={{ padding: '12px 14px', fontSize: '12px', color: '#6b7280', whiteSpace: 'nowrap' }}>
                                     {o.payment_method.toUpperCase()}<br/>
-                                    <span style={{ color: o.payment_status === 'completed' ? '#10b981' : '#f59e0b' }}>{o.payment_status}</span>
+                                    <select
+                                        value={o.payment_status}
+                                        onChange={e => handlePaymentStatusChange(o.id, e.target.value)}
+                                        disabled={updating === o.id}
+                                        style={{ padding: '2px 4px', borderRadius: '4px', border: `1px solid ${o.payment_status === 'completed' ? '#10b981' : o.payment_status === 'failed' ? '#ef4444' : '#f59e0b'}`, color: o.payment_status === 'completed' ? '#10b981' : o.payment_status === 'failed' ? '#ef4444' : '#f59e0b', fontSize: '11px', outline: 'none', background: 'transparent', cursor: 'pointer', marginTop: '4px', textTransform: 'capitalize' }}
+                                    >
+                                        {['pending', 'completed', 'failed', 'refunded'].map(s => (
+                                            <option key={s} value={s}>{s}</option>
+                                        ))}
+                                    </select>
                                 </td>
                                 <td style={{ padding: '12px 14px' }}><StatusBadge status={o.status} /></td>
                                 <td style={{ padding: '12px 14px', color: '#9ca3af', fontSize: '12px', whiteSpace: 'nowrap' }}>{new Date(o.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</td>
@@ -344,13 +362,13 @@ export default function Admin() {
     return (
         <div style={{ minHeight: '100vh', background: '#f8fafc' }}>
             {/* Admin Header */}
-            <div style={{ background: 'linear-gradient(135deg, #1f2937 0%, #374151 100%)', padding: '32px 40px', color: '#fff' }}>
+            <div style={{ background: 'linear-gradient(135deg, #1f2937 0%, #374151 100%)', padding: '2rem 5%', color: '#fff' }}>
                 <h1 style={{ margin: '0 0 4px', fontSize: '28px', fontWeight: '800' }}>🛡️ Admin Portal</h1>
                 <p style={{ margin: 0, color: '#9ca3af', fontSize: '14px' }}>Welcome back, {user.name}. Here's your business at a glance.</p>
             </div>
 
             {/* Tab Navigation */}
-            <div style={{ background: '#fff', borderBottom: '1px solid #e5e7eb', padding: '0 40px', display: 'flex', gap: '4px' }}>
+            <div style={{ background: '#fff', borderBottom: '1px solid #e5e7eb', padding: '0 5%', display: 'flex', gap: '4px', overflowX: 'auto' }}>
                 {TABS.map(tab => (
                     <button
                         key={tab.id}
@@ -373,7 +391,7 @@ export default function Admin() {
             </div>
 
             {/* Tab Content */}
-            <div style={{ padding: '32px 40px', maxWidth: '1400px', margin: '0 auto' }}>
+            <div style={{ padding: '2rem 5%', maxWidth: '1400px', margin: '0 auto' }}>
                 {activeTab === 'dashboard' && <DashboardTab data={dashData} />}
                 {activeTab === 'orders' && <OrdersTab />}
                 {activeTab === 'customers' && <CustomersTab />}

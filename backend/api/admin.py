@@ -7,7 +7,7 @@ from backend.models.order import Order, OrderItem, OrderStatus, PaymentStatus
 from backend.models.product import StoreProduct, Product
 from backend.models.user import User, UserRole
 from backend.models.store import Store
-from backend.schemas.schemas import OrderStatusUpdate
+from backend.schemas.schemas import OrderStatusUpdate, PaymentStatusUpdate
 from backend.api.auth import get_current_user
 
 router = APIRouter(prefix="/api/admin", tags=["Admin"])
@@ -147,6 +147,26 @@ def update_order_status(
         raise HTTPException(status_code=400, detail=f"Invalid status. Valid values: {valid}")
     db.commit()
     return {"message": f"Order #{order_id} updated to '{body.status}'"}
+
+
+@router.patch("/orders/{order_id}/payment_status")
+def update_payment_status(
+    order_id: int,
+    body: PaymentStatusUpdate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    _require_admin(current_user)
+    order = db.query(Order).filter(Order.id == order_id).first()
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found")
+    try:
+        order.payment_status = PaymentStatus(body.payment_status)
+    except ValueError:
+        valid = [s.value for s in PaymentStatus]
+        raise HTTPException(status_code=400, detail=f"Invalid payment status. Valid values: {valid}")
+    db.commit()
+    return {"message": f"Order #{order_id} payment status updated to '{body.payment_status}'"}
 
 @router.get("/users")
 def get_all_users(
