@@ -1,4 +1,8 @@
+import sys
 import os
+# Add the parent directory (root project directory) to sys.path
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import html
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
@@ -17,7 +21,8 @@ db = SessionLocal()
 try:
     if db.query(Store).count() == 0:
         print("Database is empty. Running seed_db.py to populate UAT data...")
-        subprocess.run(["python", "backend/seed_db.py"], check=True)
+        script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "seed_db.py")
+        subprocess.run(["python", script_path], check=True)
 except Exception as e:
     print(f"Auto-seeding failed: {e}")
 finally:
@@ -69,8 +74,10 @@ async def add_security_headers(request: Request, call_next):
 @app.get("/api/seed")
 def force_seed_database():
     import subprocess
+    import os
     try:
-        result = subprocess.run(["python", "backend/seed_db.py"], capture_output=True, text=True, check=True)
+        script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "seed_db.py")
+        result = subprocess.run(["python", script_path], capture_output=True, text=True, check=True)
         return {"status": "success", "output": result.stdout}
     except subprocess.CalledProcessError as e:
         return {"status": "error", "error": e.stderr}
